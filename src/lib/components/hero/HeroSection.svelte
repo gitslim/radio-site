@@ -16,9 +16,7 @@
 </script>
 
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { cn } from '$lib/utils.js';
-	import { loadHeroImage } from '$lib/utils/image.js';
 	import ParallaxSection from '$lib/components/animations/ParallaxSection.svelte';
 	import { Button } from '$lib/components/ui/button';
 
@@ -29,45 +27,27 @@
 		ctaLink = '/equipment',
 		tagline = 'Профессиональное съёмочное оборудование'
 	}: HeroSectionProps = $props();
-
-	let imageLoaded = $state(false);
-	let imageError = $state(false);
-
-	function handleImageLoad(): void {
-		imageLoaded = true;
-	}
-
-	function handleImageError(): void {
-		imageError = true;
-	}
 </script>
 
 <section class="relative w-full h-[600px] overflow-hidden bg-muted" aria-label="Hero section">
-	{#if !imageError}
-		<!-- Parallax background image -->
-		<ParallaxSection {speed}>
-			<div class="absolute inset-0 w-full h-full">
-				<img
-					src={imageUrl}
-					alt="Hero background"
-					class={cn(
-						'w-full h-full object-cover transition-opacity duration-700',
-						imageLoaded ? 'opacity-100' : 'opacity-0'
-					)}
-					onload={handleImageLoad}
-					onerror={handleImageError}
-					loading="eager"
-					decoding="async"
-				/>
-			</div>
-		</ParallaxSection>
+	<!-- Parallax background image -->
+	<ParallaxSection {speed}>
+		<div class="absolute inset-0 w-full h-full overflow-hidden">
+			<img
+				src={imageUrl}
+				alt="Hero background"
+				class="absolute inset-0 w-full h-[130%] -top-[15%] object-cover"
+				loading="eager"
+				decoding="async"
+			/>
+		</div>
+	</ParallaxSection>
 
-		<!-- Gradient overlay for text readability -->
-		<div
-			class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/80"
-			aria-hidden="true"
-		></div>
-	{/if}
+	<!-- Gradient overlay for text readability -->
+	<div
+		class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/80"
+		aria-hidden="true"
+	></div>
 
 	<!-- Content overlay -->
 	<div class="absolute inset-0 flex flex-col items-center justify-center px-4">

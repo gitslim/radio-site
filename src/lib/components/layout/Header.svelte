@@ -26,8 +26,8 @@
 
 	const navLinks = [
 		{ label: 'Главная', href: '/' },
-		{ label: 'Оборудование', href: '/equipment' },
-		{ label: 'Галерея', href: '/gallery' },
+		{ label: 'Каталог', href: '/equipment' },
+		{ label: 'О компании', href: '/about' },
 		{ label: 'Контакты', href: '/contact' }
 	];
 
@@ -44,9 +44,9 @@
 		'sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
 	)}
 >
-	<div class="container flex h-16 items-center justify-between px-4">
+	<div class="container grid h-16 items-center px-4 grid-cols-[auto_1fr_auto] md:grid-cols-[1fr_auto_1fr]">
 		<!-- Mobile Menu Button (left on mobile, hidden on desktop) -->
-		<div class="md:hidden md:w-0">
+		<div class="md:w-0 md:hidden">
 			<Sheet bind:open={isMenuOpen}>
 				<SheetTrigger>
 					{#snippet child({ props })}
@@ -99,7 +99,10 @@
 			</Sheet>
 		</div>
 
-		<!-- Logo (centered) -->
+		<!-- Left side on desktop (empty space for symmetry) -->
+		<div class="hidden md:block"></div>
+
+		<!-- Logo (always centered) -->
 		<a
 			href="/"
 			class="flex items-center justify-center space-x-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
@@ -107,31 +110,34 @@
 			<span>Радиотехника-к</span>
 		</a>
 
-		<!-- Desktop Navigation (right-aligned) -->
-		<nav class="hidden md:flex items-center justify-end space-x-8" aria-label="Main navigation">
-			{#each navLinks as link}
-				<a
-					href={link.href}
-					class={cn(
-						'text-sm font-medium transition-colors hover:text-primary py-2',
-						isLinkActive(link.href)
-							? 'text-primary'
-							: 'text-muted-foreground'
-					)}
-					aria-current={isLinkActive(link.href) ? 'page' : undefined}
-				>
-					{link.label}
-				</a>
-			{/each}
-		</nav>
+		<!-- Right side on desktop (navigation + phone) -->
+		<div class="hidden md:flex items-center justify-end space-x-6">
+			<!-- Desktop Navigation -->
+			<nav class="flex items-center space-x-6" aria-label="Main navigation">
+				{#each navLinks as link}
+					<a
+						href={link.href}
+						class={cn(
+							'text-sm font-medium transition-colors hover:text-primary py-2',
+							isLinkActive(link.href)
+								? 'text-primary'
+								: 'text-muted-foreground'
+						)}
+						aria-current={isLinkActive(link.href) ? 'page' : undefined}
+					>
+						{link.label}
+					</a>
+				{/each}
+			</nav>
 
-		<!-- Phone Number (right-aligned, visible on md and up) -->
-		<a
-			href={`tel:${companyInfo.phone.replace(/ /g, '')}`}
-			class="hidden md:flex items-center space-x-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-		>
-			<Phone class="h-4 w-4" aria-hidden="true" />
-			<span>{companyInfo.phone}</span>
-		</a>
+			<!-- Phone Number -->
+			<a
+				href={`tel:${companyInfo.phone.replace(/ /g, '')}`}
+				class="flex items-center space-x-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+			>
+				<Phone class="h-4 w-4" aria-hidden="true" />
+				<span>{companyInfo.phone}</span>
+			</a>
+		</div>
 	</div>
 </header>

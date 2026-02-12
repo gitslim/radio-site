@@ -23,9 +23,8 @@
 
 	const navLinks = [
 		{ label: 'Главная', href: '/' },
-		{ label: 'Услуги', href: '/services' },
-		{ label: 'Оборудование', href: '/equipment' },
-		{ label: 'Галерея', href: '/gallery' },
+		{ label: 'Каталог', href: '/equipment' },
+		{ label: 'О компании', href: '/about' },
 		{ label: 'Контакты', href: '/contact' }
 	];
 

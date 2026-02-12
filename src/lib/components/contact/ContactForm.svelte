@@ -5,6 +5,7 @@
 	import { cn } from '$lib/utils.js';
 	import { validateForm, isFormValid, type FormValidationErrors } from '$lib/utils/form.js';
 	import type { ContactFormData } from '$lib/utils/form.js';
+	import { companyInfo } from '$lib/data/company';
 
 	interface ContactFormProps {
 		service?: string;
@@ -45,7 +46,7 @@
 		isSubmitting = true;
 
 		// Construct mailto: link with pre-filled data
-		const email = 'chdp1975@gmail.com';
+		const email = companyInfo.email;
 		const subject = encodeURIComponent(
 			`Запрос услуги: ${formData.service || 'Общий вопрос'}`
 		);

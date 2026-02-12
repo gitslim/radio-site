@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	import type { EquipmentFilter } from '$lib/data/equipment';
+	import type { EquipmentFilter, EquipmentCategory } from '$lib/data/equipment';
 
 	export interface EquipmentFilterProps {
 		categories: string[];
@@ -43,7 +43,7 @@
 	const handleCategoryChange = (value: string): void => {
 		const newFilter: EquipmentFilter = {
 			...currentFilter,
-			category: value === 'all' ? undefined : value
+			category: value === 'all' ? undefined : (value as EquipmentCategory)
 		};
 		onFilterChange(newFilter);
 	};

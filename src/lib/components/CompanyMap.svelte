@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
+	import { companyInfo } from '$lib/data/company';
 
 	const companyAddress = [55.67, 37.66]; // [latitude, longitude]
 	const tileUrl = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -57,7 +58,7 @@
 							Нагатинская наб., д. 10 к. 3, кв. 56
 						</p>
 						<p class="text-sm">
-							<strong>Телефон:</strong> 8 495 921 9550
+							<strong>Телефон:</strong> {companyInfo.phone}
 						</p>
 					</div>
 				</svelte:component>

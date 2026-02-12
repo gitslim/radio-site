@@ -1,8 +1,9 @@
-<script lang="ts">
+ <script lang="ts">
 	// Yandex Maps JavaScript API - Enhanced version with custom balloon and large marker
 
 	// Import Svelte 5 runes for reactive state management
 	import { onMount } from 'svelte';
+	import { companyInfo } from '$lib/data/company';
 
 	// Reactive state using Svelte 5 runes
 	let mapError = $state<string | false>(false);
@@ -16,7 +17,6 @@
 	// Company information
 	const COMPANY_NAME = 'ООО «Радиотехника-к»';
 	const COMPANY_ADDRESS = '115533, город Москва, Нагатинская наб., д. 10 к. 3, кв. 56';
-	const COMPANY_PHONE = '8 495 921 9550';
 
 	// API key from environment variable
 	const API_KEY = import.meta.env.VITE_YANDEX_MAPS_API_KEY || '';
@@ -93,10 +93,10 @@
               </p>
               <p style="margin: 0 0 12px 0;">
                 <strong style="display: block; margin-bottom: 4px;">Телефон:</strong>
-                ${COMPANY_PHONE}
+                ${companyInfo.phone}
               </p>
               <a
-                href="tel:${COMPANY_PHONE.replace(/ /g, '')}"
+                href="tel:${companyInfo.phone.replace(/ /g, '')}"
                 style="
                   display: inline-block;
                   padding: 8px 16px;

@@ -37,6 +37,7 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --muted-grid: rgba(0, 0, 0, 0.08);
 }
 
 .dark {
@@ -71,6 +72,7 @@
   --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+  --muted-grid: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
@@ -170,4 +172,11 @@
     background-size: 400% 400%;
     animation: gradient-xy 15s ease infinite;
   }
+}
+
+/* Grid pattern utility class for convex-saas style background */
+.bg-grid {
+  background-size: 30px 30px;
+  background-image: linear-gradient(90deg, var(--muted-grid) 1px, transparent 0),
+    linear-gradient(180deg, var(--muted-grid) 1px, transparent 0);
 }

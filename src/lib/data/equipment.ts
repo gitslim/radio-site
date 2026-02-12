@@ -4,10 +4,21 @@
  */
 
 /**
- * Импортируем спецификацию из services.ts
- * Import Specification from services.ts
+ * Категории оборудования / Equipment categories
  */
-import type { Specification } from './services';
+export type EquipmentCategory = 'освещение' | 'камеры' | 'звук' | 'grip' | 'упаковки';
+
+/**
+ * Спецификация оборудования
+ * Equipment specification
+ */
+export interface Specification {
+	/** Метка спецификации (на русском) / Specification label (Russian) */
+	label: string;
+
+	/** Значение спецификации (может включать английские номера моделей) / Specification value (may include English model numbers) */
+	value: string;
+}
 
 /**
  * Интерфейс фильтра для оборудования
@@ -15,10 +26,13 @@ import type { Specification } from './services';
  */
 export interface EquipmentFilter {
 	/** Категория оборудования (опционально) / Equipment category (optional) */
-	category?: string;
+	category?: EquipmentCategory;
 
 	/** Доступность оборудования (опционально) / Equipment availability (optional) */
 	available?: boolean;
+
+	/** Поисковый запрос (опционально) / Search query (optional) */
+	searchTerm?: string;
 }
 
 /**
@@ -36,7 +50,7 @@ export interface Equipment {
 	slug: string;
 
 	/** Категория оборудования / Equipment category */
-	category: string;
+	category: EquipmentCategory;
 
 	/** Описание оборудования / Equipment description */
 	description: string;
@@ -52,4 +66,7 @@ export interface Equipment {
 
 	/** Рекомендуемое оборудование (опционально) / Featured equipment (optional) */
 	featured?: boolean;
+
+	/** Связанное оборудование (опционально) / Related equipment (optional) */
+	relatedIds?: string[];
 }

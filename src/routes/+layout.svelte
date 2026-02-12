@@ -6,6 +6,7 @@
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import MetaTags from '$lib/components/seo/MetaTags.svelte';
+	import Background from '$lib/components/Background.svelte';
 	import { initializeLenis } from '$lib/utils/lenis';
 
 	let { children } = $props();
@@ -41,6 +42,7 @@
 	url={$page.url.toString()}
 />
 
+<Background opacity={0.5} />
 <Header currentPath={$page.url.pathname} />
 {@render children()}
 <Footer />
