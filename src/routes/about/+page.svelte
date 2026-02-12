@@ -89,9 +89,7 @@
 			<div>
 				<h2 class="text-lg font-semibold mb-1">Веб-сайт</h2>
 				<a
-					href={`https://${companyInfo.website}`}
-					target="_blank"
-					rel="noopener noreferrer"
+					href="/"
 					class="text-primary hover:underline transition-colors"
 				>
 					{companyInfo.website}

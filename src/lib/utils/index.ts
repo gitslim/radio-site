@@ -39,3 +39,8 @@ export {
 } from './seo.js';
 
 export type { MetaTag, RussianLocale } from './seo.js';
+
+// Lenis smooth scroll utilities
+export { initializeLenis } from './lenis.js';
+
+export type { LenisConfig } from './lenis.js';

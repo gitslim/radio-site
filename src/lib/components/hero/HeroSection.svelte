@@ -2,139 +2,107 @@
 	import type { ComponentProps } from 'svelte';
 
 	export interface HeroSectionProps {
+		/** Hero image path */
+		imageUrl?: string;
+		/** Parallax speed multiplier (default: 0.3) */
+		speed?: number;
+		/** CTA button text (default: "Смотреть каталог") */
+		ctaText?: string;
+		/** CTA button link (default: "/equipment") */
+		ctaLink?: string;
+		/** Hero tagline */
 		tagline?: string;
 	}
-
-	export type HeroImage = {
-		id: string;
-		src: string;
-		alt: string;
-		title: string;
-		category: string;
-	};
 </script>
 
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { cn } from '$lib/utils.js';
 	import { loadHeroImage } from '$lib/utils/image.js';
-	import {
-		Carousel,
-		CarouselContent,
-		CarouselItem,
-		CarouselNext,
-		CarouselPrevious
-	} from '$lib/components/ui/carousel';
+	import ParallaxSection from '$lib/components/animations/ParallaxSection.svelte';
+	import { Button } from '$lib/components/ui/button';
 
-	let { tagline = 'Профессиональное съёмочное оборудование' }: HeroSectionProps = $props();
+	let {
+		imageUrl = '/images/optimized/hero-001-1920w.webp',
+		speed = 0.3,
+		ctaText = 'Смотреть каталог',
+		ctaLink = '/equipment',
+		tagline = 'Профессиональное съёмочное оборудование'
+	}: HeroSectionProps = $props();
 
-	let heroImages = $state<HeroImage[]>([]);
-	let isLoading = $state(true);
-	let error = $state<string | null>(null);
-	let loadedImages = $state<Record<string, boolean>>({});
+	let imageLoaded = $state(false);
+	let imageError = $state(false);
 
-	async function loadHeroManifest(): Promise<void> {
-		try {
-			const response = await fetch('/images/hero-manifest.json');
-			if (!response.ok) {
-				throw new Error(`Failed to load hero manifest: ${response.statusText}`);
-			}
-			const data = await response.json();
-			heroImages = data.images || [];
-			isLoading = false;
-		} catch (err) {
-			error = err instanceof Error ? err.message : 'Unknown error occurred';
-			isLoading = false;
-		}
+	function handleImageLoad(): void {
+		imageLoaded = true;
 	}
 
-	function handleImageLoad(imageId: string): void {
-		loadedImages[imageId] = true;
+	function handleImageError(): void {
+		imageError = true;
 	}
-
-	function handleImageError(imageId: string): void {
-		loadedImages[imageId] = false;
-	}
-
-	onMount(() => {
-		loadHeroManifest();
-	});
 </script>
 
 <section class="relative w-full h-[600px] overflow-hidden bg-muted" aria-label="Hero section">
-	{#if isLoading}
-		<div
-			class="flex items-center justify-center h-full w-full"
-			role="status"
-			aria-live="polite"
-		>
-			<div class="text-center">
-				<div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-				<p class="mt-4 text-muted-foreground">Загрузка...</p>
+	{#if !imageError}
+		<!-- Parallax background image -->
+		<ParallaxSection {speed}>
+			<div class="absolute inset-0 w-full h-full">
+				<img
+					src={imageUrl}
+					alt="Hero background"
+					class={cn(
+						'w-full h-full object-cover transition-opacity duration-700',
+						imageLoaded ? 'opacity-100' : 'opacity-0'
+					)}
+					onload={handleImageLoad}
+					onerror={handleImageError}
+					loading="eager"
+					decoding="async"
+				/>
 			</div>
-		</div>
-	{:else if error}
+		</ParallaxSection>
+
+		<!-- Gradient overlay for text readability -->
 		<div
-			class="flex items-center justify-center h-full w-full"
-			role="alert"
-			aria-live="assertive"
-		>
-			<div class="text-center p-6">
-				<p class="text-destructive font-medium mb-2">Ошибка загрузки изображений</p>
-				<p class="text-muted-foreground text-sm">{error}</p>
-			</div>
-		</div>
-	{:else if heroImages.length > 0}
-		<Carousel
-			opts={{
-				loop: true,
-				align: 'center'
-			}}
-			class="w-full h-full"
-		>
-			<CarouselContent class="h-full">
-				{#each heroImages as image (image.id)}
-					<CarouselItem class="h-full">
-						<div class="relative w-full h-full">
-							<img
-								src={loadHeroImage(image.id)}
-								alt={image.alt}
-								loading="lazy"
-								class={cn(
-									'w-full h-full object-cover transition-opacity duration-500',
-									loadedImages[image.id] === false ? 'opacity-0' : 'opacity-100'
-								)}
-								onload={() => handleImageLoad(image.id)}
-								onerror={() => handleImageError(image.id)}
-							/>
-							<!-- Gradient overlay for text readability -->
-							<div
-								class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"
-								aria-hidden="true"
-							></div>
-							<!-- Tagline overlay -->
-							<div class="absolute inset-0 flex items-center justify-center">
-								<h1
-									class="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center px-4 drop-shadow-lg"
-								>
-									{tagline}
-								</h1>
-							</div>
-						</div>
-					</CarouselItem>
-				{/each}
-			</CarouselContent>
-			<CarouselPrevious class="hidden md:flex" />
-			<CarouselNext class="hidden md:flex" />
-		</Carousel>
-	{:else}
-		<!-- Fallback if no images are available -->
-		<div class="flex items-center justify-center h-full w-full bg-gradient-to-br from-primary/10 to-primary/5">
-			<h1
-				class="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground text-center px-4"
-			>
-				{tagline}
-			</h1>
-		</div>
+			class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/80"
+			aria-hidden="true"
+		></div>
 	{/if}
+
+	<!-- Content overlay -->
+	<div class="absolute inset-0 flex flex-col items-center justify-center px-4">
+		<h1
+			class="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-8 drop-shadow-lg max-w-4xl"
+		>
+			{tagline}
+		</h1>
+
+		<!-- CTA Button -->
+		<Button
+			variant="default"
+			size="lg"
+			class="group px-8 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+			onclick={() => {
+				window.location.href = ctaLink;
+			}}
+		>
+			{ctaText}
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="20"
+				height="20"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="ml-2 transition-transform duration-300 group-hover:translate-x-1"
+				aria-hidden="true"
+			>
+				<path d="M5 12h14" />
+				<path d="m12 5 7 7-7 7" />
+			</svg>
+		</Button>
+	</div>
 </section>

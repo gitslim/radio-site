@@ -18,7 +18,7 @@
 
 <svelte:head>
 	{#if service}
-		<title>{service.name} - ТехКино</title>
+		<title>{service.name} - Радиотехника-к</title>
 		<meta name="description" content={service.shortDescription} />
 	{/if}
 </svelte:head>

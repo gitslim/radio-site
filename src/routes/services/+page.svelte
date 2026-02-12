@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>Услуги - ТехКино</title>
+	<title>Услуги - Радиотехника-к</title>
 	<meta name="description" content="Полный спектр услуг для профессиональных видеосъемок и киносъемок" />
 </svelte:head>
 

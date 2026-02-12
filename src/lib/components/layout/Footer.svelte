@@ -13,8 +13,8 @@
 		'w-full border-t border-border bg-slate-950/95 py-8 md:py-12'
 	)}
 >
-	<div class="container px-4">
-		<div class="flex flex-col items-center text-center space-y-4 md:space-y-6">
+	<div class="container px-4 mx-auto">
+		<div class="flex flex-col items-center justify-center text-center space-y-4 md:space-y-6 max-w-2xl mx-auto">
 			<!-- Company Name -->
 			<h2 class="text-xl font-bold text-slate-100">
 				ООО "Радиотехника-к"
@@ -30,14 +30,6 @@
 					</p>
 				</div>
 			</div>
-
-			<!-- Contact Email -->
-			<a
-				href="mailto:chdp1975@gmail.com"
-				class="text-sm text-slate-300 hover:text-slate-100 transition-colors underline-offset-4 hover:underline"
-			>
-				chdp1975@gmail.com
-			</a>
 		</div>
 	</div>
 </footer>
