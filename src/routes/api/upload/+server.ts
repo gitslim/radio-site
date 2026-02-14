@@ -8,8 +8,8 @@ import { randomUUID } from 'node:crypto';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Path to the static directory (go up from src/routes/api/upload to static)
-const STATIC_DIR = join(__dirname, '../../static');
+// Path to the static directory (at project root where SvelteKit serves static files)
+const STATIC_DIR = join(process.cwd(), 'static');
 
 // Configuration
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB

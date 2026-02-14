@@ -138,7 +138,7 @@
 			}
 
 			// Save to persist the change
-			await updateEquipment(formData.id, { images: formData.images });
+			await updateEquipment(formData.id, formData);
 
 			mediaMessage = { type: 'success', text: 'Изображение успешно добавлено' };
 		} catch (error) {
@@ -181,7 +181,7 @@
 			}
 
 			// Update equipment to persist the change
-			await updateEquipment(formData.id, { images: formData.images });
+			await updateEquipment(formData.id, formData);
 
 			mediaMessage = { type: 'success', text: 'Изображение успешно удалено' };
 		} catch (error) {
