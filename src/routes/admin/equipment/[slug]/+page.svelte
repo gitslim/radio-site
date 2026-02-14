@@ -30,6 +30,7 @@
 
 	// Form state
 	let formData = $state({
+		id: '',
 		name: '',
 		slug: '',
 		category: '' as EquipmentCategory,
@@ -69,6 +70,7 @@
 
 				if (equipment) {
 					formData = {
+						id: equipment.id,
 						name: equipment.name,
 						slug: equipment.slug,
 						category: equipment.category,
@@ -136,7 +138,7 @@
 			}
 
 			// Save to persist the change
-			await updateEquipment(formData.slug, { images: formData.images });
+			await updateEquipment(formData.id, { images: formData.images });
 
 			mediaMessage = { type: 'success', text: 'Изображение успешно добавлено' };
 		} catch (error) {
@@ -179,7 +181,7 @@
 			}
 
 			// Update equipment to persist the change
-			await updateEquipment(formData.slug, { images: formData.images });
+			await updateEquipment(formData.id, { images: formData.images });
 
 			mediaMessage = { type: 'success', text: 'Изображение успешно удалено' };
 		} catch (error) {
@@ -209,7 +211,7 @@
 			formData.images = [imageUrl, ...otherImages];
 
 			// Update equipment to persist the change
-			await updateEquipment(formData.slug, { images: formData.images });
+			await updateEquipment(formData.id, { images: formData.images });
 
 			mediaMessage = { type: 'success', text: 'Главное изображение успешно обновлено' };
 		} catch (error) {
@@ -230,7 +232,7 @@
 	function validateForm(): boolean {
 		// Prepare data for validation
 		const equipmentData: Partial<Equipment> = {
-			id: isCreateMode ? generateSlug(formData.name) : formData.slug,
+			id: isCreateMode ? generateSlug(formData.name) : formData.id,
 			name: formData.name,
 			slug: formData.slug,
 			category: formData.category,
@@ -260,7 +262,7 @@
 
 		try {
 			const equipmentData: Partial<Equipment> = {
-				id: isCreateMode ? generateSlug(formData.name) : formData.slug,
+				id: isCreateMode ? generateSlug(formData.name) : formData.id,
 				name: formData.name,
 				slug: formData.slug,
 				category: formData.category,
@@ -274,7 +276,7 @@
 			if (isCreateMode) {
 				await createEquipment(equipmentData);
 			} else {
-				await updateEquipment(formData.slug, equipmentData);
+				await updateEquipment(formData.id, equipmentData);
 			}
 
 			// Redirect to admin list

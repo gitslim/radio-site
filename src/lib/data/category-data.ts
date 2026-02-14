@@ -14,8 +14,8 @@ export type { Category };
 export const categoryData: Category[] = [
 	{
 		'id': 'category-lighting',
-		'name': 'освещение',
-		'slug': 'osveshchenie',
+		'name': 'освещение2',
+		'slug': 'освещение2',
 		'description': 'Профессиональное осветительное оборудование для студийной и натурной съемки'
 	},
 	{
