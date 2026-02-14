@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { companyInfo } from '$lib/data/company';
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_MAP_PROVIDER } from '$env/static/public';
 	import CompanyMap from '$lib/components/CompanyMap.svelte';
 	import YandexMap from '$lib/components/YandexMap.svelte';
 	import Mail from '@lucide/svelte/icons/mail';
 	import Phone from '@lucide/svelte/icons/phone';
 
 	// Get map provider from environment variable, default to yandex
-	const mapProvider = env.PUBLIC_MAP_PROVIDER || 'yandex';
+	const mapProvider = PUBLIC_MAP_PROVIDER || 'yandex';
 </script>
 
 <svelte:head>

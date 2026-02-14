@@ -4,6 +4,7 @@
 	// Import Svelte 5 runes for reactive state management
 	import { onMount } from 'svelte';
 	import { companyInfo } from '$lib/data/company';
+	import { PUBLIC_YANDEX_MAPS_API_KEY } from '$env/static/public';
 
 	// Reactive state using Svelte 5 runes
 	let mapError = $state<string | false>(false);
@@ -19,7 +20,7 @@
 	const COMPANY_ADDRESS = '115533, город Москва, Нагатинская наб., д. 10 к. 3, кв. 56';
 
 	// API key from environment variable
-	const API_KEY = import.meta.env.VITE_YANDEX_MAPS_API_KEY || '';
+	const API_KEY = PUBLIC_YANDEX_MAPS_API_KEY || '';
 
 	onMount(async () => {
 		try {

@@ -18,41 +18,24 @@
 		...restProps
 	}: WithElementRef<CarouselProps> = $props();
 
-	let carouselState = $state<EmblaContext>({
-		api: undefined,
-		scrollPrev,
-		scrollNext,
-		orientation,
-		canScrollNext: false,
-		canScrollPrev: false,
-		handleKeyDown,
-		options: opts,
-		plugins,
-		onInit,
-		scrollSnaps: [],
-		selectedIndex: 0,
-		scrollTo,
-	});
+	// Internal state for API-managed values
+	let api = $state<CarouselAPI | undefined>();
+	let canScrollNext = $state(false);
+	let canScrollPrev = $state(false);
+	let scrollSnaps = $state<number[]>([]);
+	let selectedIndex = $state(0);
 
-	setEmblaContext(carouselState);
-
+	// Functions that reference the state
 	function scrollPrev() {
-		carouselState.api?.scrollPrev();
+		api?.scrollPrev();
 	}
 
 	function scrollNext() {
-		carouselState.api?.scrollNext();
+		api?.scrollNext();
 	}
 
 	function scrollTo(index: number, jump?: boolean) {
-		carouselState.api?.scrollTo(index, jump);
-	}
-
-	function onSelect() {
-		if (!carouselState.api) return;
-		carouselState.selectedIndex = carouselState.api.selectedScrollSnap();
-		carouselState.canScrollNext = carouselState.api.canScrollNext();
-		carouselState.canScrollPrev = carouselState.api.canScrollPrev();
+		api?.scrollTo(index, jump);
 	}
 
 	function handleKeyDown(e: KeyboardEvent) {
@@ -66,17 +49,60 @@
 	}
 
 	function onInit(event: CustomEvent<CarouselAPI>) {
-		carouselState.api = event.detail;
-		setApi(carouselState.api);
+		api = event.detail;
+		setApi(api);
 
-		carouselState.scrollSnaps = carouselState.api.scrollSnapList();
-		carouselState.api.on("select", onSelect);
+		scrollSnaps = api.scrollSnapList();
+		api.on("select", onSelect);
 		onSelect();
 	}
 
+	function onSelect() {
+		if (!api) return;
+		selectedIndex = api.selectedScrollSnap();
+		canScrollNext = api.canScrollNext();
+		canScrollPrev = api.canScrollPrev();
+	}
+
+	// State object that combines props with internal state
+	let carouselState = $state<EmblaContext>({
+		api,
+		scrollPrev,
+		scrollNext,
+		orientation,
+		canScrollNext,
+		canScrollPrev,
+		handleKeyDown,
+		options: opts,
+		plugins,
+		onInit,
+		scrollSnaps,
+		selectedIndex,
+		scrollTo,
+	});
+
+	// Set context synchronously - MUST be outside $effect
+	setEmblaContext(carouselState);
+
+	// Update context when props change (orientation, opts, plugins)
+	$effect(() => {
+		carouselState.orientation = orientation;
+		carouselState.options = opts;
+		carouselState.plugins = plugins;
+	});
+
+	// Update context when internal state changes (api, canScroll, etc.)
+	$effect(() => {
+		carouselState.api = api;
+		carouselState.canScrollNext = canScrollNext;
+		carouselState.canScrollPrev = canScrollPrev;
+		carouselState.scrollSnaps = scrollSnaps;
+		carouselState.selectedIndex = selectedIndex;
+	});
+
 	$effect(() => {
 		return () => {
-			carouselState.api?.off("select", onSelect);
+			api?.off("select", onSelect);
 		};
 	});
 </script>

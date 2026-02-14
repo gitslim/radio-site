@@ -32,9 +32,9 @@ jobs:
           # BASE_PATH: "/${{ github.event.repository.name }}"
           BASE_PATH: ""
           PUBLIC_MAP_PROVIDER: yandex
-          VITE_YANDEX_MAPS_API_KEY: ${{ secrets.VITE_YANDEX_MAPS_API_KEY }}
-          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
-          CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
+          PUBLIC_YANDEX_MAPS_API_KEY: ${{ secrets.VITE_YANDEX_MAPS_API_KEY }}
+          PUBLIC_CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+          PUBLIC_CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
         run: |
           npm run build
 

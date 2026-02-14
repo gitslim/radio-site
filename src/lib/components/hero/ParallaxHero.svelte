@@ -96,9 +96,9 @@
 
     	<!-- Gradient overlay for better text readability -->
     	<div
-      		class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/10 to-black/15 z-10"
-      		aria-hidden="true"
-      	/>
+       		class="absolute inset-0 bg-gradient-to-br from-black/20 via-black/10 to-black/15 z-10"
+       		aria-hidden="true"
+       	></div>
 
 
 

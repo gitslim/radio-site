@@ -107,7 +107,7 @@
 			aria-label="Перейти на главную страницу"
 		>
 			<img
-				src="/images/logo-icon-final.png"
+				src="/images/logo.png"
 				alt=""
 				class="h-8 w-8 flex-shrink-0"
 				aria-hidden="true"
