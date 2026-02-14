@@ -126,16 +126,6 @@
 <AdminLayout>
 	{#snippet children()}
 		<div class="container mx-auto px-4 py-8">
-			<!-- Page Header -->
-			<div class="mb-8">
-				<div>
-					<h1 class="text-3xl font-bold">{title}</h1>
-					<p class="mt-2 text-muted-foreground">
-						Управление категориями оборудования
-					</p>
-				</div>
-			</div>
-
 			{#if loading}
 				<!-- Loading State -->
 				<div class="flex min-h-[400px] items-center justify-center">
