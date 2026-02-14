@@ -15,7 +15,7 @@
 	const companyCoords = [55.67, 37.66];
 
 	// Company information
-	const COMPANY_NAME = 'ООО «Радиотехника-к»';
+	const COMPANY_NAME = 'ООО «Радиотехника-К»';
 	const COMPANY_ADDRESS = '115533, город Москва, Нагатинская наб., д. 10 к. 3, кв. 56';
 
 	// API key from environment variable
@@ -167,8 +167,8 @@
 			id="yandex-map"
 			bind:this={mapContainer}
 			style="width: 100%; height: 100%;"
-			title="Карта расположения ООО Радиотехника-к"
-			aria-label="Карта расположения ООО Радиотехника-к"
+			title="Карта расположения ООО Радиотехника-К"
+			aria-label="Карта расположения ООО Радиотехника-К"
 		></div>
 	{/if}
 </div>

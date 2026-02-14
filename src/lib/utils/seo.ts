@@ -30,7 +30,7 @@ export function getRussianLocale(): RussianLocale {
 /**
  * Default site metadata
  */
-const DEFAULT_SITE_NAME = 'Радиотехника-к — Прокат оборудования для кинопроизводства';
+const DEFAULT_SITE_NAME = 'Радиотехника-К — Прокат оборудования для кинопроизводства';
 const DEFAULT_DESCRIPTION = 'Прокат профессионального оборудования для кино и видеосъемки. Осветительное оборудование, генераторы, стабилизация и другая техника.';
 const DEFAULT_OG_TYPE = 'website';
 const DEFAULT_TWITTER_CARD = 'summary_large_image';
@@ -259,7 +259,7 @@ export function generateBusinessStructuredData() {
 	return {
 		'@context': 'https://schema.org',
 		'@type': 'LocalBusiness',
-		name: 'Радиотехника-к',
+		name: 'Радиотехника-К',
 		description: DEFAULT_DESCRIPTION,
 		email: 'info@techkino.com',
 		url: 'https://techkino.com',

@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Страница не найдена - Радиотехника-к</title>
+	<title>Страница не найдена - Радиотехника-К</title>
 	<meta name="description" content="Запрошенная страница не существует" />
 </svelte:head>
 

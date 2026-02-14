@@ -51,7 +51,7 @@
 					}}
 				>
 					<div class="p-2">
-						<h3 class="font-bold text-lg mb-2">ООО «Радиотехника-к»</h3>
+						<h3 class="font-bold text-lg mb-2">ООО «Радиотехника-К»</h3>
 						<p class="text-sm mb-1">
 							<strong>Адрес:</strong><br />
 							115533, город Москва,<br />

@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { equipmentData } from '$lib/data/equipment-data';
 	import { companyInfo } from '$lib/data/company';
-	import HeroSection from '$lib/components/hero/HeroSection.svelte';
+	import ParallaxHero from '$lib/components/hero/ParallaxHero.svelte';
 	import FeaturedEquipmentCarousel from '$lib/components/equipment/FeaturedEquipmentCarousel.svelte';
 	import HowItWorks from '$lib/components/home/HowItWorks.svelte';
 	import ValueProps from '$lib/components/home/ValueProps.svelte';
@@ -17,22 +17,22 @@
 </script>
 
 <svelte:head>
-	<title>Главная - ООО "Радиотехника-к"</title>
+	<title>Главная - ООО "Радиотехника-К"</title>
 	<meta
 		name="description"
-		content="ООО Радиотехника-к - профессиональная аренда оборудования для кинопроизводства. Осветительное оборудование, генераторы, системы бесперебойного питания и многое другое."
+		content="ООО Радиотехника-К - профессиональная аренда оборудования для кинопроизводства. Осветительное оборудование, генераторы, системы бесперебойного питания и многое другое."
 	/>
 	<meta
 		name="keywords"
-		content="ООО Радиотехника-к, аренда оборудования, кинопроизводство, осветительное оборудование, генераторы, видеопродукция"
+		content="ООО Радиотехника-К, аренда оборудования, кинопроизводство, осветительное оборудование, генераторы, видеопродукция"
 	/>
 </svelte:head>
 
 <main class="min-h-screen">
 	<!-- 1. Hero Section with Parallax -->
 	<ScrollReveal>
-		<HeroSection
-			tagline="Аренда профессионального оборудования для съемок"
+		<ParallaxHero
+			title="Аренда профессионального оборудования для съемок"
 			ctaText="Перейти в каталог"
 			ctaLink="/equipment"
 		/>
@@ -74,7 +74,7 @@
 					оборудование для вашего проекта.
 				</p>
 
-				<div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+				<div class="flex flex-col items-center justify-center gap-8">
 					<a
 						href={`tel:${companyInfo.phone.replace(/\s/g, '')}`}
 						class="flex items-center gap-3 text-2xl md:text-3xl font-semibold text-primary hover:text-primary/80 transition-colors"
@@ -95,16 +95,7 @@
 						</svg>
 						{companyInfo.phone}
 					</a>
-				</div>
 
-				<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-					<Button
-						size="lg"
-						class="text-lg px-8 py-6"
-						onclick={handleContactClick}
-					>
-						Связаться
-					</Button>
 					<a
 						href={`mailto:${companyInfo.email}`}
 						class="inline-flex items-center justify-center px-8 py-6 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-primary-foreground transition-all text-lg"

@@ -61,7 +61,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.equipment.name} - Радиотехника-к</title>
+	<title>{data.equipment.name} - Радиотехника-К</title>
 	<meta name="description" content={data.equipment.description} />
 </svelte:head>
 

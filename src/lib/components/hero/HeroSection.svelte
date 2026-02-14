@@ -21,7 +21,7 @@
 	import { Button } from '$lib/components/ui/button';
 
 	let {
-		imageUrl = '/images/optimized/hero-001-1920w.webp',
+		imageUrl = '/images/hero-cinema.jpg',
 		speed = 0.3,
 		ctaText = 'Смотреть каталог',
 		ctaLink = '/equipment',

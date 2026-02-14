@@ -21,6 +21,24 @@ export interface Specification {
 }
 
 /**
+ * Категория оборудования
+ * Equipment category
+ */
+export interface Category {
+	/** Уникальный идентификатор / Unique identifier */
+	id: string;
+
+	/** Название категории / Category name */
+	name: string;
+
+	/** URL-псевдоним для маршрутизации / URL slug for routing */
+	slug: string;
+
+	/** Описание категории (опционально) / Category description (optional) */
+	description?: string;
+}
+
+/**
  * Интерфейс фильтра для оборудования
  * Equipment filter interface
  */

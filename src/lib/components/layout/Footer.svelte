@@ -17,7 +17,7 @@
 		<div class="flex flex-col items-center justify-center text-center space-y-4 md:space-y-6 max-w-2xl mx-auto">
 			<!-- Company Name -->
 			<h2 class="text-xl font-bold text-slate-100">
-				ООО "Радиотехника-к"
+				ООО "Радиотехника-К"
 			</h2>
 
 			<!-- Legal Information -->

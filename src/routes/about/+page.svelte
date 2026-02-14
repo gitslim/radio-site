@@ -85,9 +85,9 @@
 </script>
 
 <svelte:head>
-	<title>О компании - ООО "Радиотехника-к"</title>
+	<title>О компании - ООО "Радиотехника-К"</title>
 	<meta name="description" content={companyInfo.description} />
-	<meta name="keywords" content="ООО Радиотехника-к, аренда оборудования, кинопроизводство, видеопродукция" />
+	<meta name="keywords" content="ООО Радиотехника-К, аренда оборудования, кинопроизводство, видеопродукция" />
 </svelte:head>
 
 <main class="container mx-auto px-4 py-12 max-w-6xl">

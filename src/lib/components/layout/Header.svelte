@@ -26,7 +26,7 @@
 
 	const navLinks = [
 		{ label: 'Главная', href: '/' },
-		{ label: 'Каталог', href: '/equipment' },
+		{ label: 'Оборудование', href: '/equipment' },
 		{ label: 'О компании', href: '/about' },
 		{ label: 'Контакты', href: '/contact' }
 	];
@@ -44,9 +44,9 @@
 		'sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'
 	)}
 >
-	<div class="container grid h-16 items-center px-4 grid-cols-[auto_1fr_auto] md:grid-cols-[1fr_auto_1fr]">
-		<!-- Mobile Menu Button (left on mobile, hidden on desktop) -->
-		<div class="md:w-0 md:hidden">
+	<div class="container mx-auto flex h-16 items-center px-4 justify-between">
+		<!-- Mobile Menu Button (hidden on desktop) -->
+		<div class="md:hidden">
 			<Sheet bind:open={isMenuOpen}>
 				<SheetTrigger>
 					{#snippet child({ props })}
@@ -61,22 +61,23 @@
 					{/snippet}
 				</SheetTrigger>
 
-				<SheetContent side="left" class="w-[300px]">
+				<SheetContent side="left" class="w-[320px]">
 					<SheetHeader>
 						<SheetTitle>Меню</SheetTitle>
 					</SheetHeader>
-					<nav class="flex flex-col space-y-4 mt-4" aria-label="Mobile navigation">
-						{#each navLinks as link}
+					<nav class="flex flex-col space-y-0 mt-4" aria-label="Mobile navigation">
+						{#each navLinks as link, index}
 							<SheetClose>
 								{#snippet child({ props })}
 									<a
 										{...props}
 										href={link.href}
 										class={cn(
-											'flex items-center py-3 px-2 text-sm font-medium transition-colors hover:text-primary rounded-md hover:bg-accent',
+											'flex items-center py-3.5 px-4 text-sm font-medium transition-all duration-200 hover:scale-[1.02] rounded-lg border-b border-border/50',
+											index === navLinks.length - 1 ? 'border-b-0' : '',
 											isLinkActive(link.href)
 												? 'text-primary bg-accent'
-												: 'text-muted-foreground'
+												: 'text-muted-foreground hover:text-primary hover:bg-accent'
 										)}
 										aria-current={isLinkActive(link.href) ? 'page' : undefined}
 									>
@@ -89,7 +90,7 @@
 					<div class="mt-8 pt-4 border-t">
 						<a
 							href={`tel:${companyInfo.phone.replace(/ /g, '')}`}
-							class="flex items-center space-x-2 py-3 px-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+							class="flex items-center space-x-3 py-3.5 px-4 text-sm font-semibold text-primary hover:text-primary/80 transition-all duration-200 hover:scale-[1.02]"
 						>
 							<Phone class="h-4 w-4" aria-hidden="true" />
 							<span>{companyInfo.phone}</span>
@@ -99,45 +100,48 @@
 			</Sheet>
 		</div>
 
-		<!-- Left side on desktop (empty space for symmetry) -->
-		<div class="hidden md:block"></div>
-
-		<!-- Logo (always centered) -->
+		<!-- Logo (first on desktop, second on mobile) -->
 		<a
 			href="/"
-			class="flex items-center justify-center space-x-2 text-xl font-bold text-foreground hover:text-primary transition-colors"
+			class="flex items-center gap-2 hover:opacity-80 transition-opacity"
+			aria-label="Перейти на главную страницу"
 		>
-			<span>Радиотехника-к</span>
+			<img
+				src="/images/logo-icon-final.png"
+				alt=""
+				class="h-8 w-8 flex-shrink-0"
+				aria-hidden="true"
+			/>
+			<span class="font-bold text-primary text-lg tracking-tight max-w-[150px]">
+				Радиотехника-К
+			</span>
 		</a>
 
-		<!-- Right side on desktop (navigation + phone) -->
-		<div class="hidden md:flex items-center justify-end space-x-6">
-			<!-- Desktop Navigation -->
-			<nav class="flex items-center space-x-6" aria-label="Main navigation">
-				{#each navLinks as link}
-					<a
-						href={link.href}
-						class={cn(
-							'text-sm font-medium transition-colors hover:text-primary py-2',
-							isLinkActive(link.href)
-								? 'text-primary'
-								: 'text-muted-foreground'
-						)}
-						aria-current={isLinkActive(link.href) ? 'page' : undefined}
-					>
-						{link.label}
-					</a>
-				{/each}
-			</nav>
+		<!-- Desktop Navigation (hidden on mobile, after logo on desktop) -->
+		<nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
+			{#each navLinks as link}
+				<a
+					href={link.href}
+					class={cn(
+						'text-sm font-medium transition-colors hover:text-primary py-2',
+						isLinkActive(link.href)
+							? 'text-primary'
+							: 'text-muted-foreground'
+					)}
+					aria-current={isLinkActive(link.href) ? 'page' : undefined}
+				>
+					{link.label}
+				</a>
+			{/each}
+		</nav>
 
-			<!-- Phone Number -->
-			<a
-				href={`tel:${companyInfo.phone.replace(/ /g, '')}`}
-				class="flex items-center space-x-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
-			>
-				<Phone class="h-4 w-4" aria-hidden="true" />
-				<span>{companyInfo.phone}</span>
-			</a>
-		</div>
+		<!-- Phone Number (hidden on mobile, last on desktop) -->
+		<a
+			href={`tel:${companyInfo.phone.replace(/ /g, '')}`}
+			class="hidden md:flex items-center space-x-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+		>
+			<Phone class="h-4 w-4" aria-hidden="true" />
+			<span>{companyInfo.phone}</span>
+		</a>
 	</div>
 </header>
