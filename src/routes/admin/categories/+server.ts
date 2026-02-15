@@ -133,6 +133,11 @@ export async function POST({ request }: { request: Request }) {
 			newCategory.slug = generateSlug(newCategory.name);
 		}
 
+		// Auto-generate id from name if not provided
+		if (!newCategory.id && newCategory.name) {
+			newCategory.id = generateSlug(newCategory.name);
+		}
+
 		// Validate data
 		const validation = validateCategory(newCategory);
 		if (!validation.valid) {

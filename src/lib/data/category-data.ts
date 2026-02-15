@@ -11,4 +11,10 @@ export type { Category };
  * Список категорий оборудования
  * Equipment categories list
  */
-export const categoryData: Category[] = [];
+export const categoryData: Category[] = [
+	{
+		'name': 'Камеры',
+		'slug': 'kamery',
+		'id': 'kamery'
+	}
+];
