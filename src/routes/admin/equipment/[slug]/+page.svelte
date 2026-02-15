@@ -211,7 +211,7 @@
 			formData.images = [imageUrl, ...otherImages];
 
 			// Update equipment to persist the change
-			await updateEquipment(formData.id, { images: formData.images });
+			await updateEquipment(formData.id, formData);
 
 			mediaMessage = { type: 'success', text: 'Главное изображение успешно обновлено' };
 		} catch (error) {
@@ -590,6 +590,7 @@
 						<FileUpload
 							equipmentSlug={formData.slug || ''}
 							type="gallery"
+							multiple={true}
 							onUploadSuccess={(fileUrl) => handleImageUpload(fileUrl, 'gallery')}
 							open={galleryUploadDialogOpen}
 							onOpenChange={(open) => (galleryUploadDialogOpen = open)}

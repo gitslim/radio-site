@@ -13,8 +13,18 @@ export type { Category };
  */
 export const categoryData: Category[] = [
 	{
-		'name': 'Камеры',
-		'slug': 'kamery',
-		'id': 'kamery'
+		'id': 'kamery',
+		'name': 'Камеры, объективы, стабилизаторы',
+		'slug': 'kamery-obektivy-stabilizatory'
+	},
+	{
+		'name': 'Гримерные, костюмерные, актерки, штабы',
+		'slug': 'grimernye-kostyumernye-akterki-shtaby',
+		'id': 'grimernye-kostyumernye-akterki-shtaby'
+	},
+	{
+		'name': 'Светобазы и генераторы',
+		'slug': 'svetobazy-i-generatory',
+		'id': 'svetobazy-i-generatory'
 	}
 ];
