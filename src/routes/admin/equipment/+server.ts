@@ -1,5 +1,5 @@
 import { json, error } from '@sveltejs/kit';
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import type { Equipment } from '$lib/data/equipment';
@@ -239,9 +239,27 @@ export async function DELETE({ url }: { url: URL }) {
 			return json({ error: `Equipment with id '${id}' not found` }, { status: 404 });
 		}
 
+		// Save images for deletion before removing from array
+		const deletedItem = equipmentData[index];
+		const imagesToDelete = deletedItem.images || [];
+
 		// Remove the equipment
 		equipmentData.splice(index, 1);
 		await writeEquipmentData(equipmentData);
+
+		// Delete physical image files after successful data write
+		for (const imageUrl of imagesToDelete) {
+			// imageUrl format: /images/equipment/filename.jpg
+			const relativePath = imageUrl.replace('/images/equipment/', '');
+			const filePath = join(process.cwd(), 'static/images/equipment', relativePath);
+			try {
+				await unlink(filePath);
+				console.log('Deleted file:', filePath);
+			} catch (e) {
+				// File might already not exist — that's ok
+				console.warn('Could not delete file:', filePath, (e as Error).message);
+			}
+		}
 
 		return json({ success: true, message: `Equipment with id '${id}' deleted successfully` });
 	} catch (err) {
