@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AdminLayout from '$lib/components/admin/AdminLayout.svelte';
 	import CategoryManager from '$lib/components/admin/CategoryManager.svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import {
 		fetchCategories,
 		fetchEquipment,
@@ -12,6 +13,7 @@
 	import type { Category } from '$lib/data/category-data';
 	import type { Equipment } from '$lib/data/equipment';
 	import { toast } from 'svelte-sonner';
+	import PlusIcon from '@lucide/svelte/icons/plus';
 
 	let title = $state('Категории');
 
@@ -21,6 +23,9 @@
 	let loading = $state(true);
 	let error = $state<string | null>(null);
 	let submitting = $state(false);
+
+	// CategoryManager reference for accessing openCreateDialog
+	let categoryManager = $state<CategoryManager | null>(null);
 
 	// Fetch data on mount
 	$effect(() => {
@@ -145,25 +150,42 @@
 						Пожалуйста, попробуйте обновить страницу позже
 					</p>
 				</div>
-			{:else if categories.length === 0}
-				<!-- Empty State -->
-				<div class="rounded-lg border border-dashed p-12 text-center">
-					<p class="text-lg font-medium text-muted-foreground">
-						Категории не найдены
-					</p>
-					<p class="mt-2 text-sm text-muted-foreground">
-						Создайте первую категорию, нажав на кнопку "Новая категория"
-					</p>
-				</div>
 			{:else}
-				<!-- Category Manager -->
+				<!-- Page Header -->
+				<div class="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+					<div>
+						<h1 class="text-3xl font-bold">Категории</h1>
+						<p class="mt-2 text-muted-foreground">
+							Управление категориями оборудования ({categories.length})
+						</p>
+					</div>
+					<Button onclick={() => categoryManager?.openCreateDialog()} class="gap-2">
+						<PlusIcon class="size-4" />
+						Новая категория
+					</Button>
+				</div>
+
+				<!-- Always render CategoryManager so bind:this always has a reference -->
 				<CategoryManager
+					bind:this={categoryManager}
 					{categories}
 					{equipment}
 					onCreate={handleCreateCategory}
 					onUpdate={handleUpdateCategory}
 					onDelete={handleDeleteCategory}
 				/>
+
+				{#if categories.length === 0}
+					<!-- Empty State -->
+					<div class="rounded-lg border border-dashed p-12 text-center">
+						<p class="text-lg font-medium text-muted-foreground">
+							Категории не найдены
+						</p>
+						<p class="mt-2 text-sm text-muted-foreground">
+							Создайте первую категорию, нажав на кнопку "Новая категория"
+						</p>
+					</div>
+				{/if}
 			{/if}
 		</div>
 	{/snippet}

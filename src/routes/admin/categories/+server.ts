@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import type { Category } from '$lib/data/category-data';
 import type { Equipment } from '$lib/data/equipment';
+import { generateSlug, validateCategory } from '$lib/admin/validation';
 
 // Get directory path of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -12,51 +13,6 @@ const __dirname = dirname(__filename);
 // Path to data files
 const CATEGORY_DATA_PATH = join(__dirname, '../../../lib/data/category-data.ts');
 const EQUIPMENT_DATA_PATH = join(__dirname, '../../../lib/data/equipment-data.ts');
-
-/**
- * Generate slug from name
- * Converts to lowercase, replaces spaces with hyphens, removes special chars
- */
-function generateSlug(name: string): string {
-	return name
-		.toLowerCase()
-		.trim()
-		.replace(/[^a-zа-яё0-9\s-]/g, '') // Remove special chars but keep hyphens
-		.replace(/\s+/g, '-') // Replace spaces with hyphens
-		.replace(/-+/g, '-') // Replace multiple hyphens with single
-		.replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
-}
-
-/**
- * Validate category data structure
- */
-function validateCategory(data: Partial<Category>): { valid: boolean; errors: string[] } {
-	const errors: string[] = [];
-
-	// Required fields
-	if (!data.id || typeof data.id !== 'string' || data.id.trim() === '') {
-		errors.push('id is required and must be a non-empty string');
-	}
-
-	if (!data.name || typeof data.name !== 'string' || data.name.trim() === '') {
-		errors.push('name is required and must be a non-empty string');
-	}
-
-	if (!data.slug || typeof data.slug !== 'string' || data.slug.trim() === '') {
-		errors.push('slug is required and must be a non-empty string');
-	}
-
-	// Validate slug format (lowercase, alphanumeric, hyphens only)
-	const slugRegex = /^[a-zа-яё0-9-]+$/;
-	if (data.slug && !slugRegex.test(data.slug)) {
-		errors.push('slug must contain only lowercase letters, numbers, and hyphens');
-	}
-
-	return {
-		valid: errors.length === 0,
-		errors
-	};
-}
 
 /**
  * Parse category data from the TypeScript file

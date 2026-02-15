@@ -42,6 +42,7 @@
 		"@fontsource/inter": "^5.2.8",
 		"@fontsource/playfair-display": "^5.2.8",
 		"@studio-freight/lenis": "^1.0.42",
+		"sharp": "^0.34.5",
 		"sveaflet": "^0.1.4",
 		"svelte-sonner": "^1.0.7"
 	}

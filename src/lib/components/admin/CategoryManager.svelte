@@ -11,6 +11,7 @@
 	import Trash2Icon from '@lucide/svelte/icons/trash-2';
 	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
 	import { toast } from 'svelte-sonner';
+	import { generateSlug } from '$lib/admin/validation';
 
 	interface Props {
 		categories: Category[];
@@ -37,53 +38,6 @@
 	// Selected category for edit/delete
 	let selectedCategory = $state<Category | null>(null);
 
-	// Generate URL-friendly slug from category name (transliteration)
-	function generateSlug(name: string): string {
-		return name
-			.toLowerCase()
-			.trim()
-			.replace(/[а-яё]/g, (c) => {
-				const translit: Record<string, string> = {
-					а: 'a',
-					б: 'b',
-					в: 'v',
-					г: 'g',
-					д: 'd',
-					е: 'e',
-					ё: 'yo',
-					ж: 'zh',
-					з: 'z',
-					и: 'i',
-					й: 'j',
-					к: 'k',
-					л: 'l',
-					м: 'm',
-					н: 'n',
-					о: 'o',
-					п: 'p',
-					р: 'r',
-					с: 's',
-					т: 't',
-					у: 'u',
-					ф: 'f',
-					х: 'h',
-					ц: 'ts',
-					ч: 'ch',
-					ш: 'sh',
-					щ: 'shch',
-					ъ: '',
-					ы: 'y',
-					ь: '',
-					э: 'e',
-					ю: 'yu',
-					я: 'ya'
-				};
-				return translit[c] || c;
-			})
-			.replace(/[^a-z0-9]+/g, '-')
-			.replace(/^-+|-+$/g, '');
-	}
-
 	// Derived state: count equipment per category
 	let categoryWithCounts = $derived(
 		categories.map((category) => {
@@ -98,8 +52,8 @@
 		formData.slug = generateSlug(name);
 	}
 
-	// Open create dialog
-	function openCreateDialog() {
+	// Open create dialog - exported for parent component access
+	export function openCreateDialog() {
 		formData = { name: '', slug: '', description: '' };
 		isCreateDialogOpen = true;
 	}
@@ -173,22 +127,7 @@
 	}
 </script>
 
-<div class="space-y-4">
-	<!-- Header with Create Button -->
-	<div class="flex items-center justify-between">
-		<div>
-			<h2 class="text-2xl font-semibold">Категории</h2>
-			<p class="text-sm text-muted-foreground">
-				Управление категориями оборудования ({categories.length})
-			</p>
-		</div>
-		<Button onclick={openCreateDialog}>
-			<PlusIcon class="mr-2 size-4" />
-			Новая категория
-		</Button>
-	</div>
-
-	<!-- Categories Table -->
+<!-- Categories Table -->
 	<div class="rounded-md border">
 		<Table.Root>
 			<Table.Header>
@@ -244,7 +183,6 @@
 			</Table.Body>
 		</Table.Root>
 	</div>
-</div>
 
 <!-- Create Category Dialog -->
 <Dialog.Root open={isCreateDialogOpen} onOpenChange={(val) => (isCreateDialogOpen = val)}>

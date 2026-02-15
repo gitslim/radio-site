@@ -4,16 +4,7 @@
  */
 
 // Image utilities
-export {
-	loadHeroImage,
-	loadServiceImage,
-	loadEquipmentImage,
-	loadGalleryImage,
-	getResponsiveImageSrc,
-	isWebPSupported
-} from './image.js';
-
-export type { ImageSize } from './image.js';
+export { loadEquipmentImage, isWebPSupported } from './image.js';
 
 // Form utilities
 export {

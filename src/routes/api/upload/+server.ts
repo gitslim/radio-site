@@ -3,6 +3,7 @@ import { writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import sharp from 'sharp';
 
 // Get the directory path of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -14,6 +15,8 @@ const STATIC_DIR = join(process.cwd(), 'static');
 // Configuration
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif'];
+const WEBP_QUALITY = 80;
+const MAX_IMAGE_WIDTH = 1920;
 
 /**
  * Sanitize filename to prevent path traversal attacks
@@ -109,9 +112,8 @@ export async function POST({ request }: { request: Request }) {
 			return json({ error: 'Invalid equipment slug' }, { status: 400 });
 		}
 
-		// Generate unique filename
-		const extension = getExtensionFromMimeType(file.type);
-		const uniqueFilename = `${randomUUID()}${extension}`;
+		// Generate unique filename (always WebP after optimization)
+		const uniqueFilename = `${randomUUID()}.webp`;
 
 		// Create directory path
 		const uploadDir = join(STATIC_DIR, 'images', 'equipment', sanitizedSlug);
@@ -124,15 +126,21 @@ export async function POST({ request }: { request: Request }) {
 			return json({ error: 'Failed to create upload directory' }, { status: 500 });
 		}
 
-		// Save file to disk
+		// Optimize and save as WebP using Sharp
 		const filePath = join(uploadDir, uniqueFilename);
 		const fileBuffer = Buffer.from(await file.arrayBuffer());
 
 		try {
-			await writeFile(filePath, fileBuffer);
-		} catch (writeErr) {
-			console.error('Error writing file:', writeErr);
-			return json({ error: 'Failed to save file' }, { status: 500 });
+			await sharp(fileBuffer)
+				.resize(MAX_IMAGE_WIDTH, undefined, {
+					fit: 'inside',
+					withoutEnlargement: true
+				})
+				.webp({ quality: WEBP_QUALITY })
+				.toFile(filePath);
+		} catch (sharpErr) {
+			console.error('Error optimizing image with Sharp:', sharpErr);
+			return json({ error: 'Failed to optimize image' }, { status: 500 });
 		}
 
 		// Generate URL path (relative to static directory)
@@ -144,7 +152,7 @@ export async function POST({ request }: { request: Request }) {
 			fileUrl,
 			filename: uniqueFilename,
 			size: file.size,
-			mimeType: file.type
+			mimeType: 'image/webp' // Always WebP after optimization
 		});
 	} catch (err) {
 		console.error('POST error:', err);

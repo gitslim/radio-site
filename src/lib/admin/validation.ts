@@ -4,6 +4,7 @@
  */
 
 import type { Equipment, Category } from '$lib/data/equipment';
+import { slugify } from '$lib/utils';
 
 /**
  * Validation result interface
@@ -15,23 +16,17 @@ export interface ValidationResult {
 
 /**
  * Slug format validation regex
- * Supports lowercase letters (including Cyrillic), numbers, and hyphens only
+ * ASCII-only: lowercase letters, numbers, and hyphens
+ * (Cyrillic is transliterated before validation)
  */
-const SLUG_REGEX = /^[a-zа-яё0-9-]+$/;
+const SLUG_REGEX = /^[a-z0-9-]+$/;
 
 /**
  * Generate URL-friendly slug from name
- * Converts to lowercase, replaces spaces with hyphens, removes special characters
- * Supports both Latin and Cyrillic characters
+ * Transliterates Cyrillic to Latin, creates ASCII-only slug
  */
 export function generateSlug(name: string): string {
-	return name
-		.toLowerCase()
-		.trim()
-		.replace(/[^a-zа-яё0-9\s-]/g, '') // Remove special chars but keep hyphens
-		.replace(/\s+/g, '-') // Replace spaces with hyphens
-		.replace(/-+/g, '-') // Replace multiple hyphens with single
-		.replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+	return slugify(name);
 }
 
 /**

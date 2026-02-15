@@ -1,8 +1,10 @@
 import { json, error } from '@sveltejs/kit';
 import { readFile, writeFile, unlink } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
+import { dirname, join, parse } from 'node:path';
 import type { Equipment } from '$lib/data/equipment';
+
+const OPTIMIZED_SIZES = [640, 1024, 1920] as const;
 
 // Get the directory path of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -252,12 +254,29 @@ export async function DELETE({ url }: { url: URL }) {
 			// imageUrl format: /images/equipment/filename.jpg
 			const relativePath = imageUrl.replace('/images/equipment/', '');
 			const filePath = join(process.cwd(), 'static/images/equipment', relativePath);
+			const { name: fileName } = parse(relativePath);
+
 			try {
 				await unlink(filePath);
 				console.log('Deleted file:', filePath);
 			} catch (e) {
 				// File might already not exist — that's ok
 				console.warn('Could not delete file:', filePath, (e as Error).message);
+			}
+
+			// Delete optimized versions
+			for (const width of OPTIMIZED_SIZES) {
+				const optimizedPath = join(
+					process.cwd(),
+					'static/images/optimized/equipment',
+					`${fileName}-${width}w.webp`
+				);
+				try {
+					await unlink(optimizedPath);
+					console.log('Deleted optimized file:', optimizedPath);
+				} catch {
+					// File might not exist — that's ok
+				}
 			}
 		}
 

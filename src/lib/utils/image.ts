@@ -1,77 +1,65 @@
 /**
  * Image loading utilities for TechKino website
- * Provides optimized image path generation with WebP support
+ * Images are optimized at upload time using Sharp (WebP, max 1920w, quality 80)
  */
 
 /**
- * Supported image sizes for responsive loading
+ * Returns equipment image URL.
+ * Since images are optimized at upload time, this simply returns the path as-is.
+ *
+ * @param imageIdOrPath - ID of image (equipment-001) or full path (/images/equipment/slug/file.webp)
+ * @returns Full path to equipment image
  */
-export type ImageSize = '640w' | '1024w' | '1920w';
-
-/**
- * Returns optimized hero image path
- * @param imageId - The image identifier
- * @returns Full path to optimized hero image
- */
-export function loadHeroImage(imageId: string): string {
-	return `/images/optimized/${imageId}-1920w.webp`;
-}
-
-/**
- * Returns optimized service image path
- * @param imageId - The image identifier
- * @returns Full path to optimized service image
- */
-export function loadServiceImage(imageId: string): string {
-	return `/images/optimized/${imageId}-1024w.webp`;
-}
-
-/**
- * Returns optimized equipment image path
- * @param imageId - The image identifier
- * @returns Full path to optimized equipment image
- */
-export function loadEquipmentImage(imageId: string): string {
-	return `/images/optimized/equipment/${imageId}-1024w.webp`;
-}
-
-/**
- * Returns responsive gallery image path
- * @param imageId - The image identifier
- * @param size - The desired image size (default: '1024w')
- * @returns Full path to optimized gallery image
- */
-export function loadGalleryImage(
-	imageId: string,
-	size: ImageSize = '1024w'
-): string {
-	return `/images/optimized/gallery/${imageId}-${size}.webp`;
-}
-
-/**
- * Returns responsive image path for any image
- * @param src - Original image source path
- * @param size - The desired image size
- * @returns Path to responsive image version
- */
-export function getResponsiveImageSrc(src: string, size: ImageSize): string {
-	// Extract filename without extension
-	const lastSlash = src.lastIndexOf('/');
-	const lastDot = src.lastIndexOf('.');
-	const baseName = lastDot > lastSlash ? src.substring(lastSlash + 1, lastDot) : src.substring(lastSlash + 1);
-	const directory = src.substring(0, lastSlash);
-
-	// Determine appropriate directory for optimized images
-	if (directory.includes('hero')) {
-		return `${directory}/${baseName}-${size}.webp`;
-	} else if (directory.includes('equipment')) {
-		return `${directory}/${baseName}-${size}.webp`;
-	} else if (directory.includes('gallery')) {
-		return `${directory}/${baseName}-${size}.webp`;
+export function loadEquipmentImage(imageIdOrPath: string): string {
+	// If this is already a full path to WebP image in equipment folder
+	if (imageIdOrPath.startsWith('/images/equipment/') && imageIdOrPath.endsWith('.webp')) {
+		return imageIdOrPath;
 	}
 
-	// Fallback: use gallery directory
-	return `/images/optimized/gallery/${baseName}-${size}.webp`;
+	// If this is a path to original image (jpg/png/etc) - convert to WebP
+	if (imageIdOrPath.startsWith('/images/equipment/')) {
+		return imageIdOrPath.replace(/\.[^.]+$/, '.webp');
+	}
+
+	// Legacy format: ID-based path (kept for backward compatibility)
+	// Returns path to optimized folder for old data
+	return `/images/optimized/equipment/${imageIdOrPath}-1024w.webp`;
+}
+
+/**
+ * Returns srcset for responsive images.
+ * For new uploads (optimized at upload time), returns single WebP source.
+ * For legacy images, returns multiple sizes from optimized folder.
+ *
+ * @param imageIdOrPath - ID of image or full path
+ * @returns srcset string for use in img tag
+ */
+export function getEquipmentImageSrcset(imageIdOrPath: string): string {
+	// New format: single optimized WebP
+	if (imageIdOrPath.startsWith('/images/equipment/') && imageIdOrPath.endsWith('.webp')) {
+		return `${imageIdOrPath} 1920w`;
+	}
+
+	// Convert old formats to WebP
+	if (imageIdOrPath.startsWith('/images/equipment/')) {
+		const webpPath = imageIdOrPath.replace(/\.[^.]+$/, '.webp');
+		return `${webpPath} 1920w`;
+	}
+
+	// Legacy format: multiple sizes from optimized folder
+	let name: string;
+	if (imageIdOrPath.startsWith('/images/equipment/')) {
+		const fileName = imageIdOrPath.split('/').pop();
+		name = fileName?.replace(/\.[^.]+$/, '') || '';
+	} else {
+		name = imageIdOrPath;
+	}
+
+	return [
+		`/images/optimized/equipment/${name}-640w.webp 640w`,
+		`/images/optimized/equipment/${name}-1024w.webp 1024w`,
+		`/images/optimized/equipment/${name}-1920w.webp 1920w`
+	].join(', ');
 }
 
 /**
