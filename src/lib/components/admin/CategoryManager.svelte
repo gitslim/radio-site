@@ -10,6 +10,7 @@
 	import PencilIcon from '@lucide/svelte/icons/pencil';
 	import Trash2Icon from '@lucide/svelte/icons/trash-2';
 	import AlertCircleIcon from '@lucide/svelte/icons/alert-circle';
+	import { toast } from 'svelte-sonner';
 
 	interface Props {
 		categories: Category[];
@@ -123,7 +124,7 @@
 	// Handle create submission
 	function handleCreateSubmit() {
 		if (!formData.name.trim()) {
-			alert('Название категории обязательно для заполнения');
+			toast.error('Название категории обязательно для заполнения');
 			return;
 		}
 
@@ -141,7 +142,7 @@
 	// Handle edit submission
 	function handleEditSubmit() {
 		if (!formData.name.trim()) {
-			alert('Название категории обязательно для заполнения');
+			toast.error('Название категории обязательно для заполнения');
 			return;
 		}
 

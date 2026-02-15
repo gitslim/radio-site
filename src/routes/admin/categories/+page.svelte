@@ -11,6 +11,7 @@
 	} from '$lib/admin/api-client';
 	import type { Category } from '$lib/data/category-data';
 	import type { Equipment } from '$lib/data/equipment';
+	import { toast } from 'svelte-sonner';
 
 	let title = $state('Категории');
 
@@ -57,15 +58,15 @@
 		try {
 			const newCategory = await createCategory(categoryData);
 			categories = [...categories, newCategory];
-			console.log('Category created:', newCategory);
+			toast.success(`Категория "${newCategory.name}" создана`);
 		} catch (err) {
 			console.error('Failed to create category:', err);
 			if (err instanceof ApiError) {
 				error = err.message;
-				alert(`Ошибка: ${err.message}`);
+				toast.error(`Ошибка: ${err.message}`);
 			} else {
 				error = 'Не удалось создать категорию';
-				alert('Не удалось создать категорию');
+				toast.error('Не удалось создать категорию');
 			}
 		} finally {
 			submitting = false;
@@ -80,15 +81,15 @@
 		try {
 			const updatedCategory = await updateCategory(id, updates);
 			categories = categories.map((cat) => (cat.id === id ? updatedCategory : cat));
-			console.log('Category updated:', id, updates);
+			toast.success('Категория обновлена');
 		} catch (err) {
 			console.error('Failed to update category:', err);
 			if (err instanceof ApiError) {
 				error = err.message;
-				alert(`Ошибка: ${err.message}`);
+				toast.error(`Ошибка: ${err.message}`);
 			} else {
 				error = 'Не удалось обновить категорию';
-				alert('Не удалось обновить категорию');
+				toast.error('Не удалось обновить категорию');
 			}
 		} finally {
 			submitting = false;
@@ -103,15 +104,15 @@
 		try {
 			await deleteCategory(id);
 			categories = categories.filter((cat) => cat.id !== id);
-			console.log('Category deleted:', id);
+			toast.success('Категория удалена');
 		} catch (err) {
 			console.error('Failed to delete category:', err);
 			if (err instanceof ApiError) {
 				error = err.message;
-				alert(`Ошибка: ${err.message}`);
+				toast.error(`Ошибка: ${err.message}`);
 			} else {
 				error = 'Не удалось удалить категорию';
-				alert('Не удалось удалить категорию');
+				toast.error('Не удалось удалить категорию');
 			}
 		} finally {
 			submitting = false;

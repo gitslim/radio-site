@@ -11,5 +11,8 @@ export default defineConfig({
 		enhancedImages(), // must come before SvelteKit plugin
 		tailwindcss(),
 		sveltekit()
-	]
+	],
+	ssr: {
+		noExternal: ['svelte-sonner']
+	}
 });

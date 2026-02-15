@@ -6,6 +6,7 @@
 	import type { Equipment } from '$lib/data/equipment';
 	import { goto } from '$app/navigation';
 	import PlusIcon from '@lucide/svelte/icons/plus';
+	import { toast } from 'svelte-sonner';
 
 	let title = $state('Управление оборудованием');
 
@@ -62,10 +63,10 @@
 				// Update local state
 				equipment = equipment.filter((e) => e.id !== item.id);
 
-				alert(`Удалено: ${item.name}`);
+				toast.success(`Удалено: ${item.name}`);
 			} catch (err) {
 				console.error('Failed to delete equipment:', err);
-				alert('Не удалось удалить оборудование');
+				toast.error('Не удалось удалить оборудование');
 			}
 		}
 	}

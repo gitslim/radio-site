@@ -7,6 +7,7 @@
 	import FolderKanbanIcon from '@lucide/svelte/icons/folder-kanban';
 	import MenuIcon from '@lucide/svelte/icons/menu';
 	import XIcon from '@lucide/svelte/icons/x';
+	import { Toaster } from 'svelte-sonner';
 
 	let {
 		class: className,
@@ -110,4 +111,6 @@
 			{@render layoutChildren?.()}
 		</main>
 	</div>
+
+	<Toaster position="top-right" />
 </div>
