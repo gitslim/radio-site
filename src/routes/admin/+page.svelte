@@ -51,10 +51,17 @@
 
 	// Handle delete callback
 	async function handleDelete(item: Equipment) {
-		console.log('Delete equipment:', item.name);
 		if (confirm(`Удалить "${item.name}"?`)) {
 			try {
-				// TODO: Implement delete via API when endpoint is ready
+				const response = await fetch(`/admin/equipment?id=${item.id}`, {
+					method: 'DELETE'
+				});
+
+				if (!response.ok) throw new Error('Delete failed');
+
+				// Update local state
+				equipment = equipment.filter((e) => e.id !== item.id);
+
 				alert(`Удалено: ${item.name}`);
 			} catch (err) {
 				console.error('Failed to delete equipment:', err);

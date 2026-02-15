@@ -245,32 +245,6 @@ export const equipmentData: Equipment[] = [
 			'equipment-002',
 			'equipment-003'
 		]
-	},
-	{
-		'id': 'equipment-010',
-		'name': 'Кинотехнические средства',
-		'slug': 'cinema-tech-means',
-		'category': 'камеры',
-		'description': 'Современные кинотехнические средства для производства фильмов и видео.',
-		'specifications': [
-			{
-				'label': 'Тип',
-				'value': 'Универсальное'
-			},
-			{
-				'label': 'Применение',
-				'value': 'Кино и видео'
-			}
-		],
-		'images': [
-			'/images/equipment/equipment-010.jpg'
-		],
-		'available': true,
-		'relatedIds': [
-			'equipment-004',
-			'equipment-006',
-			'equipment-007'
-		]
 	}
 ];
 
