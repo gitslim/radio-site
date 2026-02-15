@@ -36,8 +36,8 @@
 		})
 	);
 
-	// Get unique categories from equipment data
-	let availableCategories = $derived(categories.sort());
+	// Get unique categories from equipment data (non-mutating sort)
+	let availableCategories = $derived([...categories].sort());
 
 	// Category display value
 	let categoryDisplayValue = $derived(selectedCategory || 'Все категории');
