@@ -38,7 +38,7 @@ export interface CompanyInfo {
 export const companyInfo: CompanyInfo = {
 	name: 'ООО "Радиотехника-К"',
 	ogrn: '1037700198821',
-	legalAddress: '115533, город Москва, Нагатинская наб., д. 10 к. 3, кв. 56',
+	legalAddress: '115533, город Москва, Нагатинская наб., д. 10 к. 3',
 	website: 'radiotexnika-k.ru',
 	email: PUBLIC_CONTACT_EMAIL || 'radiotexnika-k@mail.ru',
 	phone: PUBLIC_CONTACT_PHONE || '8 495 921 9550',

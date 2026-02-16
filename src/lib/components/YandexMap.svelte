@@ -18,7 +18,7 @@
   // Company information
   const COMPANY_NAME = "ООО «Радиотехника-К»";
   const COMPANY_ADDRESS =
-    "115533, город Москва, Нагатинская наб., д. 10 к. 3, кв. 56";
+    "115533, город Москва, Нагатинская наб., д. 10 к. 3";
 
   // API key from environment variable
   const API_KEY = PUBLIC_YANDEX_MAPS_API_KEY || "your_api_key_here";

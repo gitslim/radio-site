@@ -55,7 +55,7 @@
 						<p class="text-sm mb-1">
 							<strong>Адрес:</strong><br />
 							115533, город Москва,<br />
-							Нагатинская наб., д. 10 к. 3, кв. 56
+							Нагатинская наб., д. 10 к. 3
 						</p>
 						<p class="text-sm">
 							<strong>Телефон:</strong> {companyInfo.phone}
