@@ -11,10 +11,6 @@
 	import Phone from '@lucide/svelte/icons/phone';
 	import Lightbulb from '@lucide/svelte/icons/lightbulb';
 	import Camera from '@lucide/svelte/icons/camera';
-	import Video from '@lucide/svelte/icons/video';
-	import Volume2 from '@lucide/svelte/icons/volume-2';
-	import Wrench from '@lucide/svelte/icons/wrench';
-	import Package from '@lucide/svelte/icons/package';
 	import Shield from '@lucide/svelte/icons/shield';
 	import Check from '@lucide/svelte/icons/check';
 	import Star from '@lucide/svelte/icons/star';
@@ -28,29 +24,19 @@
 
 	const equipmentCategories: CategoryCard[] = [
 		{
-			icon: Lightbulb,
-			title: 'Осветительное оборудование',
-			description: 'Профессиональные светильники, панели и аксессуары для студийной и натурной съемки'
-		},
-		{
 			icon: Camera,
-			title: 'Камеры и объективы',
-			description: 'Цифровые камеры профессионального класса и оптика для любых съемочных задач'
+			title: 'Камеры, объективы, стабилизаторы',
+			description: 'Кинекамеры Canon и RED, кинообъективы Canon и Angénieux, стабилизатор DJI Ronin 2, профессиональный обвес ARRI'
 		},
 		{
-			icon: Volume2,
-			title: 'Звуковое оборудование',
-			description: 'Микрофоны, рекордеры и оборудование для качественной записи звука'
+			icon: Building2,
+			title: 'Гримерные, актерки, штабы',
+			description: 'Мобильные комплексы на базе ПАЗ: гримерные, актерки, костюмерные, штабы, VIP-актерки с кухнями и прицепы-автодома'
 		},
 		{
-			icon: Wrench,
-			title: 'Grip оборудование',
-			description: 'Штативы, краны, системы стабилизации и вспомогательное оборудование'
-		},
-		{
-			icon: Package,
-			title: 'Упаковки и кейсы',
-			description: 'Надежные защитные кейсы и сумки для транспортировки оборудования'
+			icon: Lightbulb,
+			title: 'Светобазы и генераторы',
+			description: 'Полные комплекты света и светового грипа, дизель-генераторы Atlas Copco 30–100 кВт для энергоснабжения площадки'
 		}
 	];
 

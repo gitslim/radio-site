@@ -32,7 +32,7 @@
 			{#each featuredEquipment as item (item.id)}
 				<Carousel.Item class="md:basis-1/2 lg:basis-1/3">
 					<div class="p-1">
-						<EquipmentCard equipment={item} />
+						<EquipmentCard equipment={item} href="/equipment/{item.slug}" />
 					</div>
 				</Carousel.Item>
 			{/each}

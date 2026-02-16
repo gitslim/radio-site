@@ -20,11 +20,6 @@
 				return false;
 			}
 
-			// Filter by availability
-			if (currentFilter.available !== undefined && item.available !== currentFilter.available) {
-				return false;
-			}
-
 			// Filter by search term (name and description, case-insensitive)
 			if (searchInput) {
 				const searchLower = searchInput.toLowerCase();
@@ -47,44 +42,38 @@
 <div class="container mx-auto px-4 py-8">
 	<h1 class="text-3xl font-bold mb-8 text-foreground">Оборудование</h1>
 
-	<!-- Search Input -->
-	<div class="mb-8">
-		<Input
-			type="text"
-			placeholder="Поиск по названию и описанию..."
-			bind:value={searchInput}
-			class="max-w-md w-full"
+	<!-- Search and Filter Row -->
+	<div class="flex flex-col sm:flex-row gap-4 mb-8">
+		<div class="flex-1">
+			<Input
+				type="text"
+				placeholder="Поиск по названию и описанию..."
+				bind:value={searchInput}
+				class="w-full"
+			/>
+		</div>
+		<EquipmentFilter
+			{categories}
+			{currentFilter}
+			onFilterChange={handleFilterChange}
 		/>
 	</div>
 
-	<div class="flex flex-col lg:flex-row gap-8">
-		<!-- Filter Sidebar -->
-		<aside class="w-full lg:w-64 shrink-0">
-			<EquipmentFilter
-				{categories}
-				{currentFilter}
-				onFilterChange={handleFilterChange}
-			/>
-		</aside>
-
-		<!-- Equipment Grid -->
-		<main class="flex-1">
-			{#if filteredEquipment().length === 0}
-				<div class="flex items-center justify-center p-12 text-muted-foreground">
-					<p class="text-lg">
-						Нет оборудования, соответствующего выбранным фильтрам
-					</p>
-				</div>
-			{:else}
-				<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-					{#each filteredEquipment() as equipment (equipment.id)}
-						<EquipmentCard
-							{equipment}
-							onClick={() => (window.location.href = `/equipment/${equipment.slug}`)}
-						/>
-					{/each}
-				</div>
-			{/if}
-		</main>
-	</div>
+	<!-- Equipment Grid -->
+	{#if filteredEquipment().length === 0}
+		<div class="flex items-center justify-center p-12 text-muted-foreground">
+			<p class="text-lg">
+				Нет оборудования, соответствующего выбранным фильтрам
+			</p>
+		</div>
+	{:else}
+		<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+			{#each filteredEquipment() as equipment (equipment.id)}
+				<EquipmentCard
+					{equipment}
+					onClick={() => (window.location.href = `/equipment/${equipment.slug}`)}
+				/>
+			{/each}
+		</div>
+	{/if}
 </div>

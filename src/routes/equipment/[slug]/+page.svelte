@@ -1,17 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Button } from '$lib/components/ui/button';
-	import {
-		Card,
-		CardContent,
-		CardHeader,
-		CardTitle
-	} from '$lib/components/ui/card';
+	import { Card, CardContent } from '$lib/components/ui/card';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import EquipmentCard from '$lib/components/equipment/EquipmentCard.svelte';
-	import ContactForm from '$lib/components/contact/ContactForm.svelte';
 	import { cn } from '$lib/utils';
 	import { loadEquipmentImage } from '$lib/utils/image';
+	import { companyInfo } from '$lib/data/company';
+	import { Phone, Mail } from '@lucide/svelte';
 
 	import type { Equipment } from '$lib/data/equipment';
 
@@ -25,6 +20,11 @@
 	// Lightbox state
 	let selectedImageIndex = $state<number | null>(null);
 	let isLightboxOpen = $state(false);
+
+	// Touch swipe state
+	let touchStartX = $state(0);
+	let touchEndX = $state(0);
+	const SWIPE_THRESHOLD = 50;
 
 	// Get first image
 	const primaryImage = $derived(data.equipment.images?.[0] || '');
@@ -54,6 +54,50 @@
 		}
 	};
 
+	// Touch handlers for swipe
+	const handleTouchStart = (e: TouchEvent) => {
+		touchStartX = e.touches[0].clientX;
+	};
+
+	const handleTouchMove = (e: TouchEvent) => {
+		touchEndX = e.touches[0].clientX;
+	};
+
+	const handleTouchEnd = () => {
+		const swipeDistance = touchStartX - touchEndX;
+		if (Math.abs(swipeDistance) > SWIPE_THRESHOLD) {
+			if (swipeDistance > 0) {
+				navigateImage('next');
+			} else {
+				navigateImage('prev');
+			}
+		}
+		touchStartX = 0;
+		touchEndX = 0;
+	};
+
+	// Keyboard navigation
+	$effect(() => {
+		if (!isLightboxOpen) return;
+
+		const handleKeydown = (e: KeyboardEvent) => {
+			switch (e.key) {
+				case 'ArrowLeft':
+					navigateImage('prev');
+					break;
+				case 'ArrowRight':
+					navigateImage('next');
+					break;
+				case 'Escape':
+					closeLightbox();
+					break;
+			}
+		};
+
+		window.addEventListener('keydown', handleKeydown);
+		return () => window.removeEventListener('keydown', handleKeydown);
+	});
+
 	// Navigate to related equipment
 	const handleRelatedClick = (slug: string) => {
 		window.location.href = `/equipment/${slug}`;
@@ -80,32 +124,15 @@
 				<h1 class="text-3xl md:text-4xl font-bold text-foreground mb-3">
 					{data.equipment.name}
 				</h1>
-				<div class="flex flex-wrap items-center gap-3">
-					<span
-						class="inline-flex items-center rounded-full px-3 py-1 text-sm font-medium {data.equipment.available
-							? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-							: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'}"
-					>
-						{#if data.equipment.available}
-							В наличии
-						{:else}
-							Недоступно
-						{/if}
-					</span>
-					<span class="text-muted-foreground text-sm">
-						{data.equipment.category}
-					</span>
-				</div>
-			</div>
-			<div class="text-right">
-				<p class="text-2xl font-semibold text-primary">Цена по договоренности</p>
+				<span class="text-muted-foreground text-sm">
+					{data.equipment.category}
+				</span>
 			</div>
 		</div>
 	</div>
 
 	<!-- Image Gallery -->
 	<div class="mb-8">
-		<h2 class="text-2xl font-bold text-foreground mb-4">Галерея</h2>
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 			{#each data.equipment.images as image, index (image)}
 				<button
@@ -149,10 +176,7 @@
 		<div class="mb-8">
 			<h2 class="text-2xl font-bold text-foreground mb-4">Характеристики</h2>
 			<Card>
-				<CardHeader>
-					<CardTitle>Технические спецификации</CardTitle>
-				</CardHeader>
-				<CardContent>
+				<CardContent class="pt-6">
 					<table class="w-full">
 						<tbody>
 							{#each data.equipment.specifications as spec (spec.label)}
@@ -170,12 +194,36 @@
 		</div>
 	{/if}
 
-	<!-- Contact Form -->
-	<div class="mb-12">
-		<h2 class="text-2xl font-bold text-foreground mb-4">Заявка на аренду</h2>
-		<Card>
+	<!-- CTA: Contact Us -->
+	<div class="mb-8">
+		<Card class="bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20">
 			<CardContent class="pt-6">
-				<ContactForm service={data.equipment.name} />
+				<div class="flex flex-col md:flex-row md:items-center gap-6">
+					<div class="flex-1">
+						<h2 class="text-xl font-bold text-foreground mb-2">
+							Заинтересовало оборудование?
+						</h2>
+						<p class="text-muted-foreground">
+							Свяжитесь с нами для уточнения деталей аренды и получения индивидуального предложения
+						</p>
+					</div>
+					<div class="flex flex-col sm:flex-row gap-4">
+						<a
+							href="tel:+74959219550"
+							class="flex items-center gap-3 px-5 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+						>
+							<Phone class="w-5 h-5" />
+							<span>{companyInfo.phone}</span>
+						</a>
+						<a
+							href="mailto:{companyInfo.email}"
+							class="flex items-center gap-3 px-5 py-3 rounded-lg border border-primary/30 bg-background text-foreground font-medium hover:bg-primary/5 transition-colors"
+						>
+							<Mail class="w-5 h-5" />
+							<span>{companyInfo.email}</span>
+						</a>
+					</div>
+				</div>
 			</CardContent>
 		</Card>
 	</div>
@@ -198,8 +246,13 @@
 
 <!-- Lightbox Dialog -->
 <Dialog.Root open={isLightboxOpen} onOpenChange={(open) => (isLightboxOpen = open)}>
-	<Dialog.Content class="max-w-4xl w-full p-0 bg-transparent border-none shadow-none">
-		<div class="relative">
+	<Dialog.Content class="max-w-[95vw] sm:max-w-[90vw] md:max-w-6xl lg:max-w-7xl w-full p-0 bg-transparent border-none shadow-none">
+		<div
+			class="relative"
+			ontouchstart={handleTouchStart}
+			ontouchmove={handleTouchMove}
+			ontouchend={handleTouchEnd}
+		>
 			<!-- Image -->
 			{#if selectedImageIndex !== null && data.equipment.images[selectedImageIndex]}
 				<img
