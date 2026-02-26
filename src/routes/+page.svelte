@@ -9,6 +9,10 @@
 	import GlassCard from '$lib/components/animations/GlassCard.svelte';
 	import ScrollReveal from '$lib/components/animations/ScrollReveal.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils.js';
+	import Headphones from '@lucide/svelte/icons/headphones';
+	import Phone from '@lucide/svelte/icons/phone';
+	import Mail from '@lucide/svelte/icons/mail';
 
 	function handleContactClick(): void {
 		// Navigate to contact page or scroll to contact section
@@ -83,51 +87,55 @@
 	<ValueProps />
 
 	<!-- 5. Contact CTA Section -->
-	<section id="contact" class="container mx-auto px-4 py-16 md:py-24">
-		<ScrollReveal>
-			<GlassCard
-				blur="lg"
-				opacity={10}
-				border
-				hover={false}
-				class="max-w-4xl mx-auto text-center p-12 md:p-16"
-			>
-				<h2 class="text-3xl md:text-4xl font-bold mb-6">Готовы начать?</h2>
-				<p class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-					Позвоните нам или напишите, чтобы обсудить детали аренды и подобрать идеальное
-					оборудование для вашего проекта.
-				</p>
+	<section id="contact" class="py-20 md:py-32 bg-background">
+		<div class="container mx-auto px-4">
+			<ScrollReveal>
+				<GlassCard
+					blur="lg"
+					opacity={10}
+					border
+					hover={false}
+					class="max-w-4xl mx-auto text-center p-12 md:p-16"
+				>
+					<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+						<Headphones class="w-8 h-8 text-primary" />
+					</div>
 
-				<div class="flex flex-col items-center justify-center gap-8">
-					<a
-						href={`tel:${companyInfo.phone.replace(/\s/g, '')}`}
-						class="flex items-center gap-3 text-2xl md:text-3xl font-semibold text-primary hover:text-primary/80 transition-colors"
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							width="32"
-							height="32"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="2"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
+					<h2 class="text-3xl md:text-4xl font-bold mb-6">Готовы начать?</h2>
+					<p class="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
+						Позвоните нам или напишите, чтобы обсудить детали аренды и подобрать идеальное
+						оборудование для вашего проекта.
+					</p>
+
+					<!-- Contact Info -->
+					<div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-10">
+						<a
+							href={`tel:${companyInfo.phone.replace(/\s/g, '')}`}
+							class={cn(
+								'flex items-center gap-3 text-lg font-medium',
+								'text-primary hover:text-primary/80 transition-colors'
+							)}
 						>
-							<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-						</svg>
-						{companyInfo.phone}
-					</a>
+							<Phone class="w-5 h-5" />
+							{companyInfo.phone}
+						</a>
+						<a
+							href={`mailto:${companyInfo.email}`}
+							class={cn(
+								'flex items-center gap-3 text-lg font-medium',
+								'text-primary hover:text-primary/80 transition-colors'
+							)}
+						>
+							<Mail class="w-5 h-5" />
+							{companyInfo.email}
+						</a>
+					</div>
 
-					<a
-						href={`mailto:${companyInfo.email}`}
-						class="inline-flex items-center justify-center px-8 py-6 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary hover:text-primary-foreground transition-all text-lg"
-					>
-						Написать email
-					</a>
-				</div>
-			</GlassCard>
-		</ScrollReveal>
+					<Button size="lg" href="/contact" class="text-lg px-8 py-6">
+						Связаться с нами
+					</Button>
+				</GlassCard>
+			</ScrollReveal>
+		</div>
 	</section>
 </main>
