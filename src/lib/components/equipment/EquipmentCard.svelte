@@ -13,7 +13,7 @@
 	import { loadEquipmentImage } from '$lib/utils/image.js';
 	import {
 		Card,
-		CardDescription
+		CardContent
 	} from '$lib/components/ui/card';
 
 	let { equipment, href, onClick }: EquipmentCardProps = $props();
@@ -43,7 +43,7 @@
 			class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 		/>
 	</div>
-	<CardDescription class="p-4">
+	<CardContent class="p-4">
 		<div class="mb-2 flex items-center justify-between">
 			<span class="text-xs font-medium text-muted-foreground uppercase tracking-wide">
 				{equipment.category}
@@ -63,7 +63,7 @@
 		<p class="text-sm text-muted-foreground line-clamp-3">
 			{equipment.description}
 		</p>
-	</CardDescription>
+	</CardContent>
 {/snippet}
 
 {#if href}
