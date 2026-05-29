@@ -569,6 +569,26 @@ export const equipmentData: Equipment[] = [
 		],
 		'available': true,
 		'featured': false
+	},
+	{
+		'id': 'vr360-telepresence-camera',
+		'name': 'Камера VR 360 с эффектом телеприсутствия',
+		'slug': 'vr360-telepresence-camera',
+		'category': 'Камеры, объективы, стабилизаторы',
+		'description': 'Камера VR 360 телеприсутствия нового поколения. Дистанционное взаимодействие с эффектом физического присутствия. Панорамное видео сверхвысокой чёткости для трансляций, конференций и виртуальных экскурсий.',
+		'specifications': [
+			{ label: 'Разрешение', value: '8K стереоскопическое' },
+			{ label: 'Формат', value: 'VR 360 панорамное видео' },
+			{ label: 'Эффект', value: 'Телеприсутствие' },
+			{ label: 'Потоковая передача', value: 'RTMP / HLS / WebRTC' },
+			{ label: 'Применение', value: 'Образование, спорт, конференции' }
+		],
+		'images': [
+			'/images/equipment/vr360-telepresence-camera/1.png',
+			'/images/equipment/vr360-telepresence-camera/2.png'
+		],
+		'available': true,
+		'featured': true
 	}
 ];
 
