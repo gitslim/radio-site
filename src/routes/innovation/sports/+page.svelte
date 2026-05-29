@@ -240,7 +240,7 @@
 		<!-- Background Image with Overlay -->
 		<div class="absolute inset-0 z-0">
 			<img
-				src="/images/innovation/sports/app-area-1.png"
+				src="/images/innovation/sports/case1-1.jpg"
 				alt="Спортивная трансляция в VR 360"
 				class="w-full h-full object-cover"
 			/>
@@ -381,19 +381,12 @@
 				{/each}
 			</div>
 
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div class="mb-12">
 				<ScrollReveal delay={200}>
-					<img
-						src="/images/innovation/sports/app-area-1.png"
-						alt="Виртуальные места на стадионе в VR 360"
-						class="rounded-xl shadow-lg w-full"
-					/>
-				</ScrollReveal>
-				<ScrollReveal delay={300}>
 					<img
 						src="/images/innovation/sports/app-area-3.jpg"
 						alt="Экшн от первого лица в спортивной трансляции"
-						class="rounded-xl shadow-lg w-full"
+						class="rounded-xl shadow-lg w-full max-w-2xl mx-auto"
 					/>
 				</ScrollReveal>
 			</div>
@@ -435,13 +428,7 @@
 				{/each}
 			</div>
 
-			<ScrollReveal delay={400}>
-				<img
-					src="/images/innovation/sports/advantages.png"
-					alt="Преимущества VR 360 для спортивных трансляций"
-					class="rounded-xl shadow-lg max-w-3xl mx-auto w-full"
-				/>
-			</ScrollReveal>
+	
 		</div>
 	</section>
 

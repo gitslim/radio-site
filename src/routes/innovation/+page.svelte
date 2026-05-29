@@ -52,7 +52,7 @@
 	<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
 		<div class="absolute inset-0 z-0">
 			<img
-				src="/images/innovation/overview/hero.png"
+				src="/images/innovation/image4.png"
 				alt="Инновационные VR 360 решения"
 				class="w-full h-full object-cover"
 			/>
