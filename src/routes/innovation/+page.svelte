@@ -77,17 +77,17 @@
 				</p>
 			</ScrollReveal>
 
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
 				{#each solutions as solution, i}
-					<ScrollReveal delay={i * 150}>
+					<ScrollReveal delay={i * 150} class="h-full">
 						<a href={solution.href} class="block h-full">
 							<GlassCard blur="lg" opacity={10} border={true} hover={true}>
-								<div class="p-8 text-center">
+								<div class="p-8 text-center flex flex-col items-center justify-center h-full">
 									<div
-										class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-6"
+										class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 mb-6 flex-shrink-0"
 									>
 										<solution.icon
-											class="w-8 h-8 text-primary"
+											class="w-8 h-8 text-white"
 										/>
 									</div>
 									<h2
@@ -101,7 +101,7 @@
 										{solution.description}
 									</p>
 									<span
-										class="inline-flex items-center gap-2 text-primary font-medium text-sm transition-transform hover:gap-3"
+										class="inline-flex items-center gap-2 text-white/90 font-medium text-sm transition-transform hover:gap-3 mt-auto"
 									>
 										Подробнее <ArrowRight class="w-4 h-4" />
 									</span>

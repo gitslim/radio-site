@@ -247,19 +247,16 @@
 			<ScrollReveal delay={500}>
 				<Button
 					size="lg"
-					class="text-lg px-8 py-6 bg-white text-gray-900 hover:bg-white/90"
 					onclick={scrollToTechnology}
+					class="bg-primary hover:bg-primary/90 text-white px-8 py-3 text-base"
 				>
-					Узнать больше
-					<ArrowDown class="ml-2 w-5 h-5" />
+					<ArrowDown class="w-4 h-4 mr-2" />
+					Как это работает
 				</Button>
 			</ScrollReveal>
 		</div>
 
-		<!-- Scroll Indicator -->
-		<div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-			<ArrowDown class="w-8 h-8 text-white/60" />
-		</div>
+		<!-- Scroll Indicator (removed) -->
 	</section>
 
 	<!-- Block 2: How It Works (Technology) -->
